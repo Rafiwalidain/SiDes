@@ -6,7 +6,7 @@ use App\Models\Resident;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
-class residentController extends Controller
+class ResidentController extends Controller
 {
     public function index()
     {
@@ -48,7 +48,7 @@ class residentController extends Controller
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
-            'nik' => ['required', 'max:16', 'min:16'],
+            'nik' => ['required', 'digits:16'],
             'name' => ['required', 'max:100'],
             'gender' => ['required', Rule::in(['male', 'female'])],
             'birth_date' => ['required', 'date'],
