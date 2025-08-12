@@ -25,9 +25,8 @@ class ResidentController extends Controller
 
     public function store(Request $request)
     {
-        // Logic to store a new resident
         $validated = $request->validate([
-            'nik' => ['required', 'max:16', 'min:16'],
+            'nik' => ['required', 'digits:16', 'unique:residents,nik'],
             'name' => ['required', 'max:100'],
             'gender' => ['required', Rule::in(['male', 'female'])],
             'birth_date' => ['required', 'date'],
@@ -38,11 +37,22 @@ class ResidentController extends Controller
             'occupation' => ['nullable', 'max:100'],
             'phone' => ['nullable', 'max:15'],
             'status' => ['required', Rule::in(['active', 'moved', 'deceased'])],
+        ], [
+            'nik.required' => 'NIK wajib diisi.',
+            'nik.digits' => 'NIK harus tepat 16 digit.',
+            'nik.unique' => 'NIK ini sudah terdaftar.',
+            'name.required' => 'Nama lengkap wajib diisi.',
+            'gender.required' => 'Jenis kelamin wajib dipilih.',
+            'birth_place.required' => 'Tempat lahir wajib diisi.',
+            'birth_date.required' => 'Tanggal lahir wajib diisi.',
+            'address.required' => 'Alamat wajib diisi.',
+            'marital_status.required' => 'Status perkawinan wajib dipilih.',
+            'status.required' => 'Status penduduk wajib dipilih.',
         ]);
 
         Resident::create($validated);
 
-        return redirect('/resident')->with('success', 'berhasil menambahkan data penduduk');
+        return redirect('/resident')->with('success', 'Berhasil menambahkan data penduduk');
     }
 
     public function update(Request $request, $id)
@@ -69,11 +79,8 @@ class ResidentController extends Controller
 
     public function edit($id)
     {
-        // Logic to show the form for editing a resident
         $resident = Resident::findOrFail($id);
-        return view('pages.resident.edit', [
-            'resident' => $resident
-        ]);
+        return view('pages.resident.edit', compact('resident'));
     }
 
     public function destroy($id)

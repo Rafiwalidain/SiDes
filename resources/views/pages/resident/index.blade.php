@@ -8,6 +8,15 @@
             class="fas fa-plus fa-sm text-white-50"></i> Tambah</a>
 </div>
 
+@if (session('success'))
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    {{ session('success') }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <i class="fas fa-times"></i>
+    </button>
+</div>
+@endif
+
 
 <!-- table -->
 <div class="row">
@@ -18,6 +27,7 @@
                     <table class="table table-bordered table-hover align-middle text-center">
                         <thead class="table-primary">
                             <tr>
+                                <th>No</th>
                                 <th>NIK</th>
                                 <th>Nama</th>
                                 <th>Jenis Kelamin</th>
@@ -41,6 +51,7 @@
                         <tbody>
                             @foreach ($residents as $resident)
                             <tr>
+                                <td>{{ $loop->iteration }}</td>
                                 <td>{{ $resident->nik }}</td>
                                 <td>{{ $resident->name }}</td>
                                 <td>{{ $resident->gender == 'male' ? 'Laki-laki' : 'Perempuan' }}</td>
@@ -71,12 +82,13 @@
                                         <a href="/resident/{{ $resident->id }}" class="d-inline-block mr-2 btn btn-sm btn-warning">
                                             <i class="fas fa-pen"></i>
                                         </a>
-                                        <a href="/resident/{{ $resident->id }}" class="btn btn-sm btn-danger">
+                                        <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDel-{{ $resident->id }}">
                                             <i class="fas fa-eraser"></i>
-                                        </a>
+                                        </button>
                                     </div>
                                 </td>
                             </tr>
+                            @include('pages.resident.confirmDel', ['resident' => $resident])
                             @endforeach
 
                         </tbody>
