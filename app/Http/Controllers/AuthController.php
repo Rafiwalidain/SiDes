@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\RedirectResponse;
 
 class AuthController extends Controller
@@ -62,5 +64,28 @@ class AuthController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/');
+    }
+
+    public function registerView()
+    {
+        return view('pages.auth.register');
+    }
+
+    public function register(Request $request)
+    {
+        $data = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
+
+        $data['password'] = Hash::make($data['password']);
+        $data['role_id'] = 2; // Role default untuk user biasa
+        $data['status'] = 'submitted'; // Status awal saat registrasi
+
+        $user = User::create($data);
+
+        // Redirect ke halaman login dengan pesan sukses
+        return redirect('/')->with('success', 'Registrasi berhasil! Silakan tunggu konfirmasi dari admin.');
     }
 }

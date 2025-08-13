@@ -163,9 +163,12 @@
             </div>
         </li>
 
+        @auth
         <div class="topbar-divider d-none d-sm-block"></div>
 
         <!-- Nav Item - User Information -->
+
+
         <li class="nav-item dropdown no-arrow">
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -179,8 +182,8 @@
                 @auth
                 <img class="img-profile rounded-circle"
                     src="{{ auth()->user()->foto 
-                ? asset('storage/profile/' . auth()->user()->foto) 
-                : asset('template/img/undraw_profile.svg') }}">
+                 ? asset('storage/profile/' . auth()->user()->foto) 
+                 : asset('template/img/undraw_profile.svg') }}">
                 @else
                 <img class="img-profile rounded-circle"
                     src="{{ asset('template/img/undraw_profile.svg') }}">
@@ -209,6 +212,7 @@
                 </a>
             </div>
         </li>
+        @endauth
 
     </ul>
 
