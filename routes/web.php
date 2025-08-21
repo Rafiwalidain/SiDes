@@ -14,11 +14,11 @@ Route::post('/register', [AuthController::class, 'register'])->name('register');
 
 Route::get('/dashboard', function () {
     return view('pages.dashboard');
-});
+})->middleware('role:Admin,User');
 
-Route::get('/resident', [residentController::class, 'index']);
-Route::get('/resident/create', [residentController::class, 'create']);
-Route::get('/resident/{id}', [residentController::class, 'edit']);
-Route::post('/resident', [residentController::class, 'store']);
-Route::put('/resident/{id}', [residentController::class, 'update']);
-Route::delete('/resident/{id}', [residentController::class, 'destroy']);
+Route::get('/resident', [residentController::class, 'index'])->middleware('role:Admin');
+Route::get('/resident/create', [residentController::class, 'create'])->middleware('role:Admin');
+Route::get('/resident/{id}', [residentController::class, 'edit'])->middleware('role:Admin');
+Route::post('/resident', [residentController::class, 'store'])->middleware('role:Admin');
+Route::put('/resident/{id}', [residentController::class, 'update'])->middleware('role:Admin');
+Route::delete('/resident/{id}', [residentController::class, 'destroy'])->middleware('role:Admin');

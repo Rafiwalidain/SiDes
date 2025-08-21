@@ -58,20 +58,20 @@
                                         <div class="form-group">
                                             <input type="text" class="form-control form-control-user"
                                                 id="inputName" name="name"
-                                                placeholder="Enter Name...">
+                                                placeholder="Enter Name..." required>
                                         </div>
                                         <div class="form-group">
                                             <input type="email" class="form-control form-control-user"
                                                 id="inputEmail" name="email" aria-describedby="emailHelp"
-                                                placeholder="Enter Email Address...">
+                                                placeholder="Enter Email Address..." required>
                                         </div>
                                         <div class="form-group">
                                             <input type="password" class="form-control form-control-user"
-                                                id="inputPassword" name="password" placeholder="Password">
+                                                id="inputPassword" name="password" placeholder="Password" required>
                                         </div>
                                         <div class="form-group">
                                             <input type="password" class="form-control form-control-user"
-                                                id="inputPasswordConfirmation" name="password_confirmation" placeholder="Confirm Password">
+                                                id="inputPasswordConfirmation" name="password_confirmation" placeholder="Confirm Password" required>
                                         </div>
                                         <button type="submit" class="btn btn-primary btn-user btn-block">
                                             Simpan

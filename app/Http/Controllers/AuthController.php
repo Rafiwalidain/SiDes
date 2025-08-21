@@ -13,7 +13,7 @@ class AuthController extends Controller
     public function login()
     {
         if (Auth::check()) {
-            return redirect()->intended('dashboard');
+            return back();
         }
 
         return view('pages.auth.login');
@@ -61,6 +61,10 @@ class AuthController extends Controller
 
     public function logout(Request $request): RedirectResponse
     {
+        if (!Auth::check()) {
+            return redirect('/')->with('error', 'Anda belum login.');
+        }
+
         Auth::logout();
 
         $request->session()->invalidate();
@@ -72,11 +76,19 @@ class AuthController extends Controller
 
     public function registerView()
     {
+        if (Auth::check()) {
+            return back();
+        }
+
         return view('pages.auth.register');
     }
 
     public function register(Request $request)
     {
+        if (Auth::check()) {
+            return back();
+        }
+
         $data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
