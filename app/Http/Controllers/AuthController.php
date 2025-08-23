@@ -24,6 +24,10 @@ class AuthController extends Controller
         $credentials = $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required'],
+        ], [
+            'email.required' => 'Email wajib diisi.',
+            'email.email' => 'Format email tidak valid.',
+            'password.required' => 'Password wajib diisi.',
         ]);
 
         if (Auth::attempt($credentials)) {
@@ -33,25 +37,20 @@ class AuthController extends Controller
 
             // Cek status akun
             if ($user->status === 'submitted') {
-                Auth::logout();
+                $this->_logout($request);
                 return back()->withErrors([
                     'email' => 'Akun Anda belum disetujui. Silakan tunggu konfirmasi dari admin.',
                 ])->onlyInput('email');
             }
 
             if ($user->status === 'rejected') {
-                Auth::logout();
+                $this->_logout($request);
                 return back()->withErrors([
                     'email' => 'Akun Anda telah ditolak. Silakan hubungi admin untuk informasi lebih lanjut.',
                 ])->onlyInput('email');
             }
 
-            // Redirect sesuai role
-            return match ($user->role_id) {
-                1 => redirect()->intended('dashboard'),
-                2 => redirect()->intended('resident'),
-                default => redirect()->intended('dashboard'),
-            };
+            return redirect()->intended('dashboard');
         }
 
         return back()->withErrors([
@@ -59,18 +58,22 @@ class AuthController extends Controller
         ])->onlyInput('email');
     }
 
-    public function logout(Request $request): RedirectResponse
+    public function _logout(Request $request)
     {
-        if (!Auth::check()) {
-            return redirect('/')->with('error', 'Anda belum login.');
-        }
-
         Auth::logout();
 
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
+    }
 
+    public function logout(Request $request)
+    {
+        if (!Auth::check()) {
+            return redirect('/')->with('error', 'Anda belum login.');
+        }
+
+        $this->_logout($request);
         return redirect('/');
     }
 
