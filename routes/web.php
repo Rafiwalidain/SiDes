@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\residentController;
 
 
@@ -22,3 +23,5 @@ Route::get('/resident/{id}', [residentController::class, 'edit'])->middleware('r
 Route::post('/resident', [residentController::class, 'store'])->middleware('role:Admin');
 Route::put('/resident/{id}', [residentController::class, 'update'])->middleware('role:Admin');
 Route::delete('/resident/{id}', [residentController::class, 'destroy'])->middleware('role:Admin');
+
+Route::get('/account-requests', [UserController::class, 'accountRequests'])->middleware('role:Admin');

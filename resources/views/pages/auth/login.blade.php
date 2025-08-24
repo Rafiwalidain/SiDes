@@ -38,11 +38,10 @@
                                     {{-- Validation errors --}}
                                     @if ($errors->any())
                                     <div class="alert alert-danger">
-                                        <ul class="mb-0">
-                                            @foreach ($errors->all() as $error)
-                                            <li>{{ $error }}</li>
-                                            @endforeach
-                                        </ul>
+                                        @foreach ($errors->all() as $error)
+                                        {{ $error }}
+                                        <br>
+                                        @endforeach
                                     </div>
                                     @endif
 
@@ -58,7 +57,7 @@
                                                 placeholder="Enter Email Address..."
                                                 required>
                                             @error('email')
-                                            <small class="text-danger">{{ $message }}</small>
+
                                             @enderror
                                         </div>
                                         <div class="form-group">
@@ -70,7 +69,6 @@
                                                 placeholder="Password"
                                                 required>
                                             @error('password')
-                                            <small class="text-danger">{{ $message }}</small>
                                             @enderror
                                         </div>
                                         <button type="submit" class="btn btn-primary btn-user btn-block">

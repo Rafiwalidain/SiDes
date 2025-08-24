@@ -11,6 +11,11 @@ $menus = [
 'path' => 'resident',
 'icon' => 'fas fa-fw fa-users',
 ],
+(object)[
+'name' => 'Permintaan Akun',
+'path' => 'account-requests',
+'icon' => 'fas fa-fw fa-user',
+],
 ],
 2 => [
 (object)[

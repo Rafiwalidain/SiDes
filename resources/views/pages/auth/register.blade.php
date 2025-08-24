@@ -67,11 +67,16 @@
                                         </div>
                                         <div class="form-group">
                                             <input type="password" class="form-control form-control-user"
-                                                id="inputPassword" name="password" placeholder="Password" required>
+                                                id="inputPassword" name="password" placeholder="Password"
+                                                minlength="8" required>
+                                            <small id="passwordHelp" class="form-text text-danger d-none">
+                                                Password minimal 8 karakter.
+                                            </small>
                                         </div>
                                         <div class="form-group">
                                             <input type="password" class="form-control form-control-user"
-                                                id="inputPasswordConfirmation" name="password_confirmation" placeholder="Confirm Password" required>
+                                                id="inputPasswordConfirmation" name="password_confirmation"
+                                                placeholder="Confirm Password" required>
                                         </div>
                                         <button type="submit" class="btn btn-primary btn-user btn-block">
                                             Simpan
@@ -99,6 +104,20 @@
     <script src="{{ asset('template/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('template/vendor/jquery-easing/jquery.easing.min.js') }}"></script>
     <script src="{{ asset('template/js/sb-admin-2.min.js') }}"></script>
+
+    <script>
+        const passwordInput = document.getElementById("inputPassword");
+        const passwordHelp = document.getElementById("passwordHelp");
+
+        passwordInput.addEventListener("input", () => {
+            if (passwordInput.value.length < 8) {
+                passwordHelp.classList.remove("d-none");
+            } else {
+                passwordHelp.classList.add("d-none");
+            }
+        });
+    </script>
+
 
 </body>
 
