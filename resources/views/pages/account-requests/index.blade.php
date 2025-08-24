@@ -47,16 +47,17 @@
                                 <td>{{ $resident->email }}</td>
                                 <td>
                                     <div class="d-flex justify-content-center">
-                                        <button type="button" class="d-inline-block mr-2 btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDel-{{ $resident->id }}">
+                                        <button type="button" class="d-inline-block mr-2 btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#confirmReject-{{ $resident->id }}">
                                             Tolak
                                         </button>
-                                        <button type="button" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#confirmDel-{{ $resident->id }}">
+                                        <button type="button" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#confirmApprove-{{ $resident->id }}">
                                             Setuju
                                         </button>
                                     </div>
                                 </td>
                             </tr>
-                            @include('pages.resident.confirmDel', ['resident' => $resident])
+                            @include('pages.account-requests.confirm-approve')
+                            @include('pages.account-requests.confirm-reject')
                             @endforeach
 
                         </tbody>
