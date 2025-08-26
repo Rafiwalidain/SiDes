@@ -9,7 +9,7 @@ class UserController extends Controller
 {
     public function accountRequests()
     {
-        $users = \App\Models\User::where('status', 'submitted')->get();
+        $users = User::where('status', 'submitted')->get();
 
 
         return view('pages.account-requests.index', [
@@ -19,10 +19,39 @@ class UserController extends Controller
 
     public function accountApproval(Request $request, $userId)
     {
+        $for = $request->input('for');
+
         $user = User::findOrFail($userId);
-        $user->status = $request->input('for') == 'approve' ? 'approved' : 'rejected';
+
+        if ($for == 'approve') {
+            $user->status = 'approved';
+            $message = 'Akun berhasil disetujui.';
+        } elseif ($for == 'reject') {
+            $user->status = 'rejected';
+            $message = 'Akun berhasil ditolak.';
+        } elseif ($for == 'activate') {
+            $user->status = 'approved'; // aktifkan = approved
+            $message = 'Akun berhasil diaktifkan.';
+        } elseif ($for == 'deactivate') {
+            $user->status = 'rejected'; // non-aktifkan = rejected (atau buat status baru 'inactive')
+            $message = 'Akun berhasil dinonaktifkan.';
+        } else {
+            return back()->with('error', 'Aksi tidak dikenal.');
+        }
+
         $user->save();
 
-        return back()->with('success', 'Akun berhasil ' . ($user->status == 'approved' ? 'disetujui' : 'ditolak') . '.');
+        return back()->with('success', $message);
+    }
+
+    public function accountList()
+    {
+        $users = User::where('role_id', 2)
+            ->whereIn('status', ['approved', 'rejected']) // hanya ambil yang statusnya approved atau rejected
+            ->get();
+
+        return view('pages.account-list.index', [
+            'users' => $users
+        ]);
     }
 }
