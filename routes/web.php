@@ -31,4 +31,6 @@ Route::post('/account-requests/approval/{id}', [UserController::class, 'accountA
 
 // profile
 Route::get('/profile', [UserController::class, 'profile_view'])->middleware('role:Admin,User');
+Route::post('/profile/{id}', [UserController::class, 'edit_profile'])->middleware('role:Admin,User');
 Route::get('/change-password', [UserController::class, 'change_password_view'])->middleware('role:Admin,User');
+Route::post('/change-password/{id}', [UserController::class, 'change_password'])->middleware('role:Admin,User');
