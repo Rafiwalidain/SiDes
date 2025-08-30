@@ -28,3 +28,7 @@ Route::get('/account-list', [UserController::class, 'accountList'])->middleware(
 
 Route::get('/account-requests', [UserController::class, 'accountRequests'])->middleware('role:Admin');
 Route::post('/account-requests/approval/{id}', [UserController::class, 'accountApproval'])->middleware('role:Admin');
+
+// profile
+Route::get('/profile', [UserController::class, 'profile_view'])->middleware('role:Admin,User');
+Route::get('/change-password', [UserController::class, 'change_password_view'])->middleware('role:Admin,User');

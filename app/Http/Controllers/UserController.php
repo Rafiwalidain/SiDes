@@ -54,4 +54,14 @@ class UserController extends Controller
             'users' => $users
         ]);
     }
+
+    public function profile_view()
+    {
+        return view('pages.profile.index');
+    }
+
+    public function change_password_view()
+    {
+        return view('pages.profile.change-password');
+    }
 }
