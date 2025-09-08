@@ -78,17 +78,23 @@
                                     @endswitch
                                 </td>
                                 <td>
-                                    <div class="d-flex justify-content-center">
-                                        <a href="/resident/{{ $resident->id }}" class="d-inline-block mr-2 btn btn-sm btn-warning">
+                                    <div class="d-flex allign-items-center" style="gap: 10px">
+                                        <a href="/resident/{{ $resident->id }}" class="d-inline-block btn btn-sm btn-warning">
                                             <i class="fas fa-pen"></i>
                                         </a>
                                         <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDel-{{ $resident->id }}">
                                             <i class="fas fa-eraser"></i>
                                         </button>
+                                        @if (!is_null($resident->user_id))
+                                        <button type="button" class="btn btn-sm btn-outline-info" data-bs-toggle="modal" data-bs-target="#detailAccount-{{ $resident->id }}">
+                                            Lihat Akun
+                                        </button>
+                                        @endif
                                     </div>
                                 </td>
                             </tr>
                             @include('pages.resident.confirmDel', ['resident' => $resident])
+                            @include('pages.resident.detailAccount'), ['resident' => $resident])
                             @endforeach
 
                         </tbody>

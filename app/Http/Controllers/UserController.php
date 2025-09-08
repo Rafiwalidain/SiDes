@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Resident;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -11,15 +12,21 @@ class UserController extends Controller
     public function accountRequests()
     {
         $users = User::where('status', 'submitted')->get();
+        $residents = Resident::where('user_id', null)->get();
 
 
         return view('pages.account-requests.index', [
-            'users' => $users
+            'users' => $users,
+            'residents' => $residents,
         ]);
     }
 
     public function accountApproval(Request $request, $userId)
     {
+        $request->validate([
+            'resident_id' => 'nullable|exists:residents,id',
+        ]);
+
         $for = $request->input('for');
 
         $user = User::findOrFail($userId);
@@ -41,6 +48,12 @@ class UserController extends Controller
         }
 
         $user->save();
+
+        $residentId = $request->input('resident_id');
+
+        if ($request->has('resident_id') && isset($residentId)) {
+            Resident::where('id', $residentId)->update(['user_id' => $user->id]);
+        }
 
         return back()->with('success', $message);
     }
