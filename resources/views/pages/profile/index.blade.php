@@ -23,7 +23,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="form-group mb-3">
-                        <label for="name">Nama Lengkap</label>
+                        <label for="name">Nama Lengkap.</label>
                         <input type="text" class="form-control" id="name" name="name"
                             value="{{ old('name', auth()->user()->name) }}">
                         @error('name') <div class="text-danger">{{ $message }}</div> @enderror
