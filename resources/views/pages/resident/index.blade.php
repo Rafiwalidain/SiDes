@@ -51,7 +51,7 @@
                         <tbody>
                             @foreach ($residents as $resident)
                             <tr>
-                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $loop->iteration + $residents->firstItem() - 1 }}</td>
                                 <td>{{ $resident->nik }}</td>
                                 <td>{{ $resident->name }}</td>
                                 <td>{{ $resident->gender == 'male' ? 'Laki-laki' : 'Perempuan' }}</td>
@@ -103,6 +103,12 @@
                     </table>
                 </div>
             </div>
+            @if ($residents->lastPage() > 1)
+
+            <div class="card-footer">
+                {{ $residents->links('pagination::bootstrap-5') }}
+            </div>
+            @endif
         </div>
     </div>
 </div>
