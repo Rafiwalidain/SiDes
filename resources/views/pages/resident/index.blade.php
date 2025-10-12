@@ -89,12 +89,13 @@
                                         <button type="button" class="btn btn-sm btn-outline-info" data-bs-toggle="modal" data-bs-target="#detailAccount-{{ $resident->id }}">
                                             Lihat Akun
                                         </button>
+                                        @include('pages.resident.detailAccount')
                                         @endif
                                     </div>
                                 </td>
                             </tr>
-                            @include('pages.resident.confirmDel', ['resident' => $resident])
-                            @include('pages.resident.detailAccount'), ['resident' => $resident])
+                            @include('pages.resident.confirmDel')
+
                             @endforeach
 
                         </tbody>
